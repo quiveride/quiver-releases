@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quiver — A home for every Claude Code session</title>
+    <meta
+      name="description"
+      content="Quiver is a desktop hub for Claude Code. See every session across every project at a glance, with the real terminal, real git diff, and a real shell in one window."
+    />
+    <meta property="og:title" content="Quiver — A home for every Claude Code session" />
+    <meta
+      property="og:description"
+      content="Stop juggling tmux tabs. Quiver gives every Claude Code session a window of its own."
+    />
+    <meta property="og:image" content="./assets/screenshot-overview.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'&gt;&lt;path d='M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z' fill='%232563eb'/&gt;&lt;/svg&gt;" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter var', 'Inter', 'ui-sans-serif', 'system-ui'],
+              mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo'],
+            },
+            colors: {
+              ink: {
+                900: '#0b0d12',
+                700: '#3b4250',
+                500: '#5b6473',
+                300: '#9aa3b2',
+                100: '#e5e8ee',
+              },
+              accent: '#2563eb',
+            },
+            maxWidth: { container: '1180px' },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'Inter var', Inter, ui-sans-serif, system-ui, sans-serif;
+        font-feature-settings: 'cv11', 'ss01';
+        -webkit-font-smoothing: antialiased;
+        color: #0b0d12;
+        background: #ffffff;
+      }
+      .grid-bg {
+        background-image: linear-gradient(rgba(11, 13, 18, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(11, 13, 18, 0.04) 1px, transparent 1px);
+        background-size: 36px 36px;
+        background-position: -1px -1px;
+      }
+      .gradient-fade {
+        mask-image: linear-gradient(180deg, black 0%, black 60%, transparent 100%);
+        -webkit-mask-image: linear-gradient(180deg, black 0%, black 60%, transparent 100%);
+      }
+      .shadow-product {
+        box-shadow: 0 24px 60px -22px rgba(11, 13, 18, 0.18),
+          0 8px 24px -8px rgba(11, 13, 18, 0.1),
+          0 0 0 1px rgba(11, 13, 18, 0.05);
+      }
+      .badge-dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #2563eb;
+        margin-right: 8px;
+        transform: translateY(-1px);
+      }
+      .hover-rise {
+        transition: transform 200ms ease, box-shadow 200ms ease;
+      }
+      .hover-rise:hover {
+        transform: translateY(-2px);
+      }
+      .kbd {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 11px;
+        padding: 2px 6px;
+        border-radius: 4px;
+        background: #f3f4f7;
+        border: 1px solid #e5e8ee;
+        color: #3b4250;
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <!-- ============ NAV ============ -->
+    <header class="sticky top-0 z-30 backdrop-blur bg-white/70 border-b border-ink-100">
+      <div class="max-w-container mx-auto px-6 h-14 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 font-semibold tracking-tight">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" fill="#2563eb" />
+          </svg>
+          <span>Quiver</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-7 text-sm text-ink-700">
+          <a href="#features" class="hover:text-ink-900 transition-colors">Features</a>
+          <a href="#workflow" class="hover:text-ink-900 transition-colors">Workflow</a>
+          <a href="https://github.com/quiveride/quiver-releases/releases" class="hover:text-ink-900 transition-colors" target="_blank" rel="noopener">Releases</a>
+          <a href="/zh/" class="hover:text-ink-900 transition-colors">中文</a>
+        </nav>
+        <div class="flex items-center gap-3">
+          <a
+            href="https://github.com/quiveride/quiver-releases/releases/latest"
+            target="_blank"
+            rel="noopener"
+            class="hidden sm:inline-flex items-center gap-1.5 text-sm text-ink-700 hover:text-ink-900"
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.39v-1.38c-2.22.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.16-.89-1.16-.73-.5.05-.49.05-.49.81.06 1.24.83 1.24.83.72 1.23 1.88.88 2.34.67.07-.52.28-.88.51-1.08-1.77-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.94.29.25.54.74.54 1.49v2.21c0 .22.15.46.55.39A8 8 0 0 0 8 0Z"/></svg>
+            GitHub
+          </a>
+          <a
+            href="#download"
+            class="inline-flex items-center gap-1.5 px-3.5 h-9 rounded-lg bg-ink-900 text-white text-sm font-medium hover:bg-ink-700 transition-colors"
+          >
+            Download
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ HERO ============ -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 grid-bg gradient-fade -z-10" aria-hidden="true"></div>
+      <div class="max-w-container mx-auto px-6 pt-20 pb-12 md:pt-28">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 text-xs font-medium text-ink-500 mb-6">
+            <span class="badge-dot"></span>
+            Built for Claude Code
+          </div>
+          <h1 class="text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
+            A home for every<br />Claude Code session.
+          </h1>
+          <p class="mt-6 text-lg md:text-xl text-ink-500 leading-relaxed max-w-2xl">
+            Stop juggling tmux tabs and terminal windows. Quiver gives every
+            session a place &mdash; pinned, searchable, with the real terminal,
+            real diff, and a real shell in one frame.
+          </p>
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <a
+              href="#download"
+              class="inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-ink-900 text-white text-sm font-medium hover:bg-ink-700 transition-colors"
+            >
+              Download for macOS
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path d="M8 11.5 3.5 7l1-1L7 8.5V2h2v6.5L11.5 6l1 1L8 11.5Z" />
+                <path d="M3 13h10v1H3v-1Z" />
+              </svg>
+            </a>
+            <a
+              href="https://github.com/quiveride/quiver-releases"
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-ink-100 text-sm font-medium hover:bg-ink-100/60 transition-colors"
+            >
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.39v-1.38c-2.22.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.16-.89-1.16-.73-.5.05-.49.05-.49.81.06 1.24.83 1.24.83.72 1.23 1.88.88 2.34.67.07-.52.28-.88.51-1.08-1.77-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.94.29.25.54.74.54 1.49v2.21c0 .22.15.46.55.39A8 8 0 0 0 8 0Z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+          <div class="mt-6 text-xs text-ink-300 flex items-center gap-4">
+            <span>macOS · Apple Silicon &amp; Intel</span>
+            <span class="opacity-60">·</span>
+            <span>Free &amp; source-available</span>
+          </div>
+        </div>
+
+        <div class="mt-16 md:mt-20 relative">
+          <div class="rounded-2xl overflow-hidden shadow-product bg-white">
+            <img
+              src="./assets/screenshot-overview.png"
+              alt="Quiver showing the sessions sidebar, project list, and resume cards"
+              class="block w-full"
+              loading="eager"
+            />
+          </div>
+          <div
+            class="absolute -inset-6 -z-10 rounded-3xl opacity-50"
+            style="background: radial-gradient(60% 60% at 50% 30%, rgba(37,99,235,0.18), transparent);"
+            aria-hidden="true"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROBLEM ============ -->
+    <section class="border-t border-ink-100">
+      <div class="max-w-container mx-auto px-6 py-20 md:py-24">
+        <div class="grid md:grid-cols-12 gap-10 items-start">
+          <div class="md:col-span-5">
+            <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">The problem</p>
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight">
+              Claude Code sessions don&rsquo;t stay where you put them.
+            </h2>
+          </div>
+          <div class="md:col-span-7 space-y-6 text-ink-700 text-[17px] leading-relaxed">
+            <p>
+              You start a session in <code class="kbd">checkout-api</code>, switch to
+              <code class="kbd">storefront-web</code> to verify, end up with six
+              terminal tabs, two iTerm windows, and a tmux pane you forgot
+              about. By Friday afternoon, you can&rsquo;t remember which
+              session was iterating on which branch.
+            </p>
+            <p>
+              Wrapping Claude in a chrome of buttons isn&rsquo;t the answer
+              &mdash; the CLI is the product. Quiver doesn&rsquo;t
+              re-implement Claude Code. It manages the <em>windows</em> around
+              it: live, pinned, searchable, with everything you&rsquo;d open
+              alongside it on the same surface.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURES ============ -->
+    <section id="features" class="border-t border-ink-100 bg-[#fafbfc]">
+      <div class="max-w-container mx-auto px-6 py-20 md:py-24">
+        <div class="max-w-2xl mb-14">
+          <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">What it does</p>
+          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight">
+            Every session, every project, one frame.
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Feature 1: cross-project sidebar -->
+          <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise shadow-product/0">
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">01 · Sidebar</div>
+            <h3 class="text-xl font-semibold tracking-tight">Cross-project, at a glance.</h3>
+            <p class="mt-3 text-ink-500 leading-relaxed">
+              Every Claude Code session across every repo, grouped by project,
+              status dot live. Pin the two you live in. Search across titles,
+              prompts, and paths.
+            </p>
+          </div>
+
+          <!-- Feature 2: real terminal -->
+          <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">02 · Terminal</div>
+            <h3 class="text-xl font-semibold tracking-tight">The real Claude TUI. Not a wrapper.</h3>
+            <p class="mt-3 text-ink-500 leading-relaxed">
+              A real PTY runs <code class="kbd">claude</code> exactly the way
+              you would from your shell &mdash; full Nerd Font, oh-my-zsh
+              themes, vim keys, <code class="kbd">⌥</code> word-jump, the lot.
+              Zero behavior changes.
+            </p>
+          </div>
+
+          <!-- Feature 3: files + changes -->
+          <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">03 · Diff &amp; Files</div>
+            <h3 class="text-xl font-semibold tracking-tight">See what Claude is doing, as it does it.</h3>
+            <p class="mt-3 text-ink-500 leading-relaxed">
+              Right pane mirrors the working tree of the active session.
+              Switch to <em>Changes</em> for live <code class="kbd">git status</code>;
+              click any file for a side-by-side diff. No second IDE.
+            </p>
+          </div>
+
+          <!-- Feature 4: bottom terminal -->
+          <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">04 · Shell</div>
+            <h3 class="text-xl font-semibold tracking-tight">A second pane for everything else.</h3>
+            <p class="mt-3 text-ink-500 leading-relaxed">
+              Drop a zsh pane below the session to run tests, check
+              <code class="kbd">git log</code>, kick off a build &mdash; in
+              the same cwd as the session above it. <code class="kbd">⌃`</code>
+              toggles it.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DEEP DIVE: SESSION SHOT ============ -->
+    <section id="workflow" class="border-t border-ink-100">
+      <div class="max-w-container mx-auto px-6 py-20 md:py-28">
+        <div class="grid md:grid-cols-12 gap-10 items-center">
+          <div class="md:col-span-5 order-2 md:order-1">
+            <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">In session</p>
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight">
+              Resume any conversation in one click.
+            </h2>
+            <p class="mt-4 text-ink-700 text-[17px] leading-relaxed">
+              The OPENED list at the top of the sidebar tracks sessions
+              you&rsquo;re actively running. RECENT lets you pick up where
+              you stopped last week without remembering which directory
+              you were in.
+            </p>
+            <ul class="mt-6 space-y-3 text-ink-700 text-[15px]">
+              <li class="flex gap-3">
+                <span class="badge-dot mt-2"></span>
+                Sessions parsed from <code class="kbd">~/.claude/projects/</code>
+                &mdash; nothing proprietary.
+              </li>
+              <li class="flex gap-3">
+                <span class="badge-dot mt-2"></span>
+                Title auto-derived from the conversation; rename inline if you
+                want.
+              </li>
+              <li class="flex gap-3">
+                <span class="badge-dot mt-2"></span>
+                Status dot reflects the real state: running, awaiting input,
+                idle, done.
+              </li>
+            </ul>
+          </div>
+          <div class="md:col-span-7 order-1 md:order-2">
+            <div class="rounded-2xl overflow-hidden shadow-product bg-white">
+              <img
+                src="./assets/screenshot-session.png"
+                alt="Quiver showing an active Claude Code session with the conversation, sidebar, and file tree"
+                class="block w-full"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DEEP DIVE: SHELL ============ -->
+    <section class="border-t border-ink-100 bg-[#fafbfc]">
+      <div class="max-w-container mx-auto px-6 py-20 md:py-28">
+        <div class="grid md:grid-cols-12 gap-10 items-center">
+          <div class="md:col-span-7">
+            <div class="rounded-2xl overflow-hidden shadow-product bg-white">
+              <img
+                src="./assets/screenshot-terminal.png"
+                alt="Quiver with the bottom terminal toggled, running git status alongside the Claude session"
+                class="block w-full"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <div class="md:col-span-5">
+            <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">No context switch</p>
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight">
+              The shell you&rsquo;d open anyway, baked in.
+            </h2>
+            <p class="mt-4 text-ink-700 text-[17px] leading-relaxed">
+              Quiver doesn&rsquo;t replace your terminal &mdash; it absorbs
+              the one you keep next to Claude. Same shell, same path, same
+              dotfiles. <code class="kbd">git diff</code> the change Claude
+              just made, run the test suite, and answer Claude&rsquo;s next
+              prompt without alt-tabbing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DOWNLOAD ============ -->
+    <section id="download" class="border-t border-ink-100">
+      <div class="max-w-container mx-auto px-6 py-24 md:py-32 text-center">
+        <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">Get Quiver</p>
+        <h2 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight max-w-2xl mx-auto">
+          Free. macOS. One signed DMG.
+        </h2>
+        <p class="mt-5 text-ink-500 text-lg max-w-xl mx-auto">
+          Releases live in a public companion repo. Pick the architecture
+          that matches your Mac.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="https://github.com/quiveride/quiver-releases/releases/latest"
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 h-12 px-6 rounded-lg bg-ink-900 text-white text-sm font-medium hover:bg-ink-700 transition-colors"
+          >
+            Latest release
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M6 12 11 8 6 4v8Z" />
+            </svg>
+          </a>
+          <a
+            href="https://github.com/quiveride/quiver-releases/releases"
+            target="_blank"
+            rel="noopener"
+            class="inline-flex items-center gap-2 h-12 px-6 rounded-lg border border-ink-100 text-sm font-medium hover:bg-ink-100/60 transition-colors"
+          >
+            All releases
+          </a>
+        </div>
+        <p class="mt-8 text-xs text-ink-300">
+          Currently macOS only. Linux &amp; Windows on the roadmap.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="border-t border-ink-100">
+      <div class="max-w-container mx-auto px-6 py-10 flex flex-col md:flex-row gap-6 items-center justify-between text-sm text-ink-500">
+        <div class="flex items-center gap-2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" fill="#2563eb" />
+          </svg>
+          <span class="text-ink-700">Quiver</span>
+          <span class="opacity-60">— built for Claude Code</span>
+        </div>
+        <nav class="flex items-center gap-6">
+          <a href="https://github.com/quiveride/quiver-releases" target="_blank" rel="noopener" class="hover:text-ink-900">GitHub</a>
+          <a href="https://github.com/quiveride/quiver-releases/releases" target="_blank" rel="noopener" class="hover:text-ink-900">Releases</a>
+          <a href="/zh/" class="hover:text-ink-900">中文</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
