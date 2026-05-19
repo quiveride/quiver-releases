@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Quiver —— 每一个 Claude Code 会话的归处</title>
+    <title>Quiver —— 每一个 coding agent 会话的归处</title>
     <meta
       name="description"
-      content="Quiver 是 Claude Code 的桌面工作台。一屏看完所有项目的会话，真实终端、真实 git diff、真实 shell 全在同一个窗口里。"
+      content="Quiver 是终端 coding agent 的桌面工作台。Claude Code、Codex 跨项目的所有会话一屏看完，真实终端、真实 git diff、真实 shell 全在同一个窗口里。"
     />
-    <meta property="og:title" content="Quiver —— 每一个 Claude Code 会话的归处" />
+    <meta property="og:title" content="Quiver —— 每一个 coding agent 会话的归处" />
     <meta
       property="og:description"
-      content="不再到处翻 tmux 标签页。Quiver 给每个 Claude Code 会话一个固定的窗口。"
+      content="不再到处翻 tmux 标签页。Quiver 给每个 Claude Code 和 Codex 会话一个固定的窗口。"
     />
     <meta property="og:image" content="../assets/screenshot-overview.png" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -103,14 +103,15 @@
         <div class="max-w-3xl">
           <div class="inline-flex items-center gap-2 text-xs font-medium text-ink-500 mb-6">
             <span class="badge-dot"></span>
-            为 Claude Code 而生
+            为终端 coding agent 而生 · Claude Code · Codex
           </div>
           <h1 class="text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
-            每一个 Claude Code<br />会话的归处。
+            每一个 coding agent<br />会话的归处。
           </h1>
           <p class="mt-6 text-lg md:text-xl text-ink-500 leading-relaxed max-w-2xl">
             不再翻 tmux 标签页、不再开八个 iTerm 窗口。
-            Quiver 把每一个会话固定下来 —— 真实终端、真实 diff、真实 shell，全在同一个画面里。
+            Quiver 把每一个终端 coding agent 会话 —— Claude Code、Codex，以及更多即将支持的 ——
+            都固定下来：真实终端、真实 diff、真实 shell，全在同一个画面里。
           </p>
           <div class="mt-9 flex flex-wrap items-center gap-3">
             <a href="#download" class="inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-ink-900 text-white text-sm font-medium hover:bg-ink-700">
@@ -128,7 +129,7 @@
           <div class="mt-6 text-xs text-ink-300 flex items-center gap-4">
             <span>macOS · Apple Silicon &amp; Intel</span>
             <span class="opacity-60">·</span>
-            <span>免费 · 源码开放</span>
+            <span>单个签名 DMG</span>
           </div>
         </div>
 
@@ -150,18 +151,19 @@
           <div class="md:col-span-5">
             <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">痛点</p>
             <h2 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight">
-              Claude Code 的会话总在四处流浪。
+              Coding agent 的会话总在四处流浪。
             </h2>
           </div>
           <div class="md:col-span-7 space-y-6 text-ink-700 text-[17px] leading-relaxed">
             <p>
               一会儿在 <code class="kbd">checkout-api</code> 里和 Claude 改代码，
-              切到 <code class="kbd">storefront-web</code> 验证，再开个 tmux 跑测试 ——
-              到周五下午，你已经忘了哪个会话在哪个分支上跑到哪了。
+              切到 <code class="kbd">storefront-web</code> 让 Codex 验证一遍，
+              再开个 tmux 跑测试 —— 到周五下午，你已经忘了哪个会话在哪个分支上跑到哪了，
+              连是 Claude 还是 Codex 起的都得猜。
             </p>
             <p>
-              把 Claude 包成一个按钮一堆的界面不是答案 —— CLI 本身就是产品。
-              Quiver 不重写 Claude Code，它管理的是 Claude 周围的那些<em>窗口</em>：
+              把 CLI 包成一个按钮一堆的界面不是答案 —— CLI 本身<em>就是</em>产品。
+              Quiver 不重写 Claude 或 Codex，它管理的是它们周围的那些<em>窗口</em>：
               活的、置顶的、可搜索的，外加平时本来就要并排打开的那些东西。
             </p>
           </div>
@@ -183,34 +185,39 @@
             <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">01 · 侧栏</div>
             <h3 class="text-xl font-semibold tracking-tight">跨项目，一眼看完。</h3>
             <p class="mt-3 text-ink-500 leading-relaxed">
-              所有 repo 下的会话按项目归类，状态点实时显示。
-              常用的两个项目置顶。会话标题、首条 prompt、路径 —— 全部可搜索。
+              所有 repo 下的会话按项目归类，状态点实时显示。常用项目置顶。
+              会话标题、首条 prompt、路径全部可搜索 —— 不管来自 Claude 还是 Codex。
             </p>
           </div>
           <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
-            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">02 · 终端</div>
-            <h3 class="text-xl font-semibold tracking-tight">真实的 Claude TUI，不是包壳。</h3>
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">02 · Agents</div>
+            <h3 class="text-xl font-semibold tracking-tight">两个 agent，一个侧栏。</h3>
             <p class="mt-3 text-ink-500 leading-relaxed">
-              真 PTY 跑的是和你 shell 里完全一样的 <code class="kbd">claude</code> ——
+              新建会话按项目选 agent。Claude
+              <span class="kbd" style="background:#3d2615;color:#f5d6b1;border-color:#3d2615">C</span>
+              和 Codex
+              <span class="kbd" style="background:#1d3a26;color:#b8eccb;border-color:#1d3a26">X</span>
+              的会话共享同一份侧栏，按最近活跃排序，一键恢复。更多 agent 在路上。
+            </p>
+          </div>
+          <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">03 · 终端</div>
+            <h3 class="text-xl font-semibold tracking-tight">真实的 CLI，不是包壳。</h3>
+            <p class="mt-3 text-ink-500 leading-relaxed">
+              真 PTY 跑的是和你 shell 里完全一样的 <code class="kbd">claude</code> 或
+              <code class="kbd">codex</code> ——
               Nerd Font、oh-my-zsh 主题、vim 快捷键、<code class="kbd">⌥</code> 跳词，全部正常。
               没有任何行为差异。
             </p>
           </div>
           <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
-            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">03 · Diff &amp; 文件</div>
-            <h3 class="text-xl font-semibold tracking-tight">边聊边看 Claude 改了什么。</h3>
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">04 · Diff &amp; 文件</div>
+            <h3 class="text-xl font-semibold tracking-tight">边聊边看 agent 改了什么。</h3>
             <p class="mt-3 text-ink-500 leading-relaxed">
               右侧自动跟随当前会话的工作目录。
-              切到 Changes 标签可以看实时 <code class="kbd">git status</code>，
-              点击任何文件都会弹出对比视图。不用再开一个 IDE。
-            </p>
-          </div>
-          <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
-            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">04 · Shell</div>
-            <h3 class="text-xl font-semibold tracking-tight">另开一个 pane，做别的事。</h3>
-            <p class="mt-3 text-ink-500 leading-relaxed">
-              下半屏一个 zsh 面板，跑测试、看 <code class="kbd">git log</code>、起 build ——
-              和上面会话同一个目录。<code class="kbd">⌃`</code> 一键切换。
+              切到 Changes 标签看实时 <code class="kbd">git status</code>，
+              点任意文件弹出对比视图。下半屏 <code class="kbd">⌃`</code>
+              开一个 zsh pane 跑测试、看 <code class="kbd">git log</code>，和上面同目录。
             </p>
           </div>
         </div>
@@ -228,13 +235,13 @@
             </h2>
             <p class="mt-4 text-ink-700 text-[17px] leading-relaxed">
               侧栏顶部的 OPENED 跟踪正在跑的会话，
-              RECENT 让你不用记得"上周那个 bug 是在哪个目录里讨论的"。
+              RECENT 让你不用记得"上周那个 bug 是在哪个目录里、用哪个 agent 讨论的"。
               直接点，从上次结束的地方继续。
             </p>
             <ul class="mt-6 space-y-3 text-ink-700 text-[15px]">
-              <li class="flex gap-3"><span class="badge-dot mt-2"></span>会话直接读 <code class="kbd">~/.claude/projects/</code>，没有自己的私有格式。</li>
-              <li class="flex gap-3"><span class="badge-dot mt-2"></span>标题自动从对话里提取；不满意可以双击改名。</li>
-              <li class="flex gap-3"><span class="badge-dot mt-2"></span>状态点反映真实状态：运行中、等用户输入、空闲、已完成。</li>
+              <li class="flex gap-3"><span class="badge-dot mt-2"></span>会话直接读每个 agent 自己的日志文件 —— 没有私有协议，也没有后台 daemon。</li>
+              <li class="flex gap-3"><span class="badge-dot mt-2"></span>标题自动从对话里提取；每行带一个 agent 小标记，一眼区分 Claude 和 Codex。</li>
+              <li class="flex gap-3"><span class="badge-dot mt-2"></span>状态点反映真实状态：运行中、等用户输入、等待权限确认、空闲、已完成。</li>
             </ul>
           </div>
           <div class="md:col-span-7 order-1 md:order-2">
@@ -261,9 +268,9 @@
               你本来就要开的那个 shell，直接内置。
             </h2>
             <p class="mt-4 text-ink-700 text-[17px] leading-relaxed">
-              Quiver 不取代你的终端 —— 它把那个本来就跟 Claude 并排开着的 shell 收编进来。
+              Quiver 不取代你的终端 —— 它把那个本来就跟 agent 并排开着的 shell 收编进来。
               同一个 shell、同一个 cwd、同一份 dotfiles。
-              <code class="kbd">git diff</code> 看 Claude 刚改的东西，跑测试、回答 Claude 的下一个 prompt，
+              <code class="kbd">git diff</code> 看 Claude 或 Codex 刚改的东西，跑测试、回答下一个 prompt，
               全程不用 alt-tab。
             </p>
           </div>
@@ -276,7 +283,7 @@
       <div class="max-w-container mx-auto px-6 py-24 md:py-32 text-center">
         <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">下载 Quiver</p>
         <h2 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight max-w-2xl mx-auto">
-          免费、macOS、一个签名 DMG。
+          macOS · 单个签名 DMG。
         </h2>
         <p class="mt-5 text-ink-500 text-lg max-w-xl mx-auto">
           发布物放在公开的 quiver-releases 仓库，挑一个对应你 Mac 架构的版本即可。
@@ -305,7 +312,7 @@
             <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" fill="#2563eb" />
           </svg>
           <span class="text-ink-700">Quiver</span>
-          <span class="opacity-60">—— 为 Claude Code 而生</span>
+          <span class="opacity-60">—— 为终端 coding agent 而生</span>
         </div>
         <nav class="flex items-center gap-6">
           <a href="https://github.com/quiveride/quiver-releases" target="_blank" rel="noopener" class="hover:text-ink-900">GitHub</a>

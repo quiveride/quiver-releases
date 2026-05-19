@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Quiver — A home for every Claude Code session</title>
+    <title>Quiver — A home for every coding agent session</title>
     <meta
       name="description"
-      content="Quiver is a desktop hub for Claude Code. See every session across every project at a glance, with the real terminal, real git diff, and a real shell in one window."
+      content="Quiver is a desktop hub for terminal coding agents. Claude Code and Codex sessions across every project — at a glance — with the real terminal, real git diff, and a real shell in one window."
     />
-    <meta property="og:title" content="Quiver — A home for every Claude Code session" />
+    <meta property="og:title" content="Quiver — A home for every coding agent session" />
     <meta
       property="og:description"
-      content="Stop juggling tmux tabs. Quiver gives every Claude Code session a window of its own."
+      content="Stop juggling tmux tabs. Quiver gives every Claude Code and Codex session a window of its own."
     />
     <meta property="og:image" content="./assets/screenshot-overview.png" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -137,15 +137,16 @@
         <div class="max-w-3xl">
           <div class="inline-flex items-center gap-2 text-xs font-medium text-ink-500 mb-6">
             <span class="badge-dot"></span>
-            Built for Claude Code
+            Built for terminal coding agents · Claude Code · Codex
           </div>
           <h1 class="text-5xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
-            A home for every<br />Claude Code session.
+            A home for every<br />coding agent session.
           </h1>
           <p class="mt-6 text-lg md:text-xl text-ink-500 leading-relaxed max-w-2xl">
             Stop juggling tmux tabs and terminal windows. Quiver gives every
-            session a place &mdash; pinned, searchable, with the real terminal,
-            real diff, and a real shell in one frame.
+            terminal coding agent &mdash; Claude Code, Codex, and more to come &mdash;
+            a place: pinned, searchable, with the real terminal, real diff,
+            and a real shell in one frame.
           </p>
           <div class="mt-9 flex flex-wrap items-center gap-3">
             <a
@@ -171,7 +172,7 @@
           <div class="mt-6 text-xs text-ink-300 flex items-center gap-4">
             <span>macOS · Apple Silicon &amp; Intel</span>
             <span class="opacity-60">·</span>
-            <span>Free &amp; source-available</span>
+            <span>One signed DMG</span>
           </div>
         </div>
 
@@ -200,23 +201,24 @@
           <div class="md:col-span-5">
             <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">The problem</p>
             <h2 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight">
-              Claude Code sessions don&rsquo;t stay where you put them.
+              Coding agent sessions don&rsquo;t stay where you put them.
             </h2>
           </div>
           <div class="md:col-span-7 space-y-6 text-ink-700 text-[17px] leading-relaxed">
             <p>
-              You start a session in <code class="kbd">checkout-api</code>, switch to
-              <code class="kbd">storefront-web</code> to verify, end up with six
-              terminal tabs, two iTerm windows, and a tmux pane you forgot
-              about. By Friday afternoon, you can&rsquo;t remember which
-              session was iterating on which branch.
+              You start a Claude session in <code class="kbd">checkout-api</code>,
+              switch to a Codex session in <code class="kbd">storefront-web</code>
+              to verify, end up with six terminal tabs, two iTerm windows, and
+              a tmux pane you forgot about. By Friday afternoon, you can&rsquo;t
+              remember which session was on which branch &mdash; or which agent
+              you ran it in.
             </p>
             <p>
-              Wrapping Claude in a chrome of buttons isn&rsquo;t the answer
-              &mdash; the CLI is the product. Quiver doesn&rsquo;t
-              re-implement Claude Code. It manages the <em>windows</em> around
-              it: live, pinned, searchable, with everything you&rsquo;d open
-              alongside it on the same surface.
+              Wrapping a CLI in a chrome of buttons isn&rsquo;t the answer
+              &mdash; the CLI <em>is</em> the product. Quiver doesn&rsquo;t
+              re-implement Claude or Codex. It manages the <em>windows</em>
+              around them: live, pinned, searchable, with everything you&rsquo;d
+              open alongside on the same surface.
             </p>
           </div>
         </div>
@@ -239,44 +241,49 @@
             <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">01 · Sidebar</div>
             <h3 class="text-xl font-semibold tracking-tight">Cross-project, at a glance.</h3>
             <p class="mt-3 text-ink-500 leading-relaxed">
-              Every Claude Code session across every repo, grouped by project,
-              status dot live. Pin the two you live in. Search across titles,
-              prompts, and paths.
+              Every session across every repo, grouped by project, status dot
+              live. Pin the two you live in. Search across titles, prompts,
+              and paths &mdash; whether they came from Claude or Codex.
             </p>
           </div>
 
-          <!-- Feature 2: real terminal -->
+          <!-- Feature 2: multi-agent -->
           <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
-            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">02 · Terminal</div>
-            <h3 class="text-xl font-semibold tracking-tight">The real Claude TUI. Not a wrapper.</h3>
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">02 · Agents</div>
+            <h3 class="text-xl font-semibold tracking-tight">Two agents. One sidebar.</h3>
             <p class="mt-3 text-ink-500 leading-relaxed">
-              A real PTY runs <code class="kbd">claude</code> exactly the way
-              you would from your shell &mdash; full Nerd Font, oh-my-zsh
-              themes, vim keys, <code class="kbd">⌥</code> word-jump, the lot.
-              Zero behavior changes.
+              Pick the agent when you start a session, per project. Claude
+              <span class="kbd" style="background:#3d2615;color:#f5d6b1;border-color:#3d2615">C</span>
+              and Codex
+              <span class="kbd" style="background:#1d3a26;color:#b8eccb;border-color:#1d3a26">X</span>
+              sessions share the same sidebar, sort by recency, and resume in
+              one click. More agents on the way.
             </p>
           </div>
 
-          <!-- Feature 3: files + changes -->
+          <!-- Feature 3: real terminal -->
           <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
-            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">03 · Diff &amp; Files</div>
-            <h3 class="text-xl font-semibold tracking-tight">See what Claude is doing, as it does it.</h3>
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">03 · Terminal</div>
+            <h3 class="text-xl font-semibold tracking-tight">The real CLI. Not a wrapper.</h3>
+            <p class="mt-3 text-ink-500 leading-relaxed">
+              A real PTY runs <code class="kbd">claude</code> or
+              <code class="kbd">codex</code> exactly the way you would from
+              your shell &mdash; full Nerd Font, oh-my-zsh themes, vim keys,
+              <code class="kbd">⌥</code> word-jump, the lot. Zero behavior
+              changes.
+            </p>
+          </div>
+
+          <!-- Feature 4: files + changes -->
+          <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">04 · Diff &amp; Files</div>
+            <h3 class="text-xl font-semibold tracking-tight">See what your agent just did.</h3>
             <p class="mt-3 text-ink-500 leading-relaxed">
               Right pane mirrors the working tree of the active session.
               Switch to <em>Changes</em> for live <code class="kbd">git status</code>;
-              click any file for a side-by-side diff. No second IDE.
-            </p>
-          </div>
-
-          <!-- Feature 4: bottom terminal -->
-          <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
-            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">04 · Shell</div>
-            <h3 class="text-xl font-semibold tracking-tight">A second pane for everything else.</h3>
-            <p class="mt-3 text-ink-500 leading-relaxed">
-              Drop a zsh pane below the session to run tests, check
-              <code class="kbd">git log</code>, kick off a build &mdash; in
-              the same cwd as the session above it. <code class="kbd">⌃`</code>
-              toggles it.
+              click any file for a side-by-side diff. Drop a zsh pane below
+              with <code class="kbd">⌃`</code> for the tests and
+              <code class="kbd">git log</code> you&rsquo;d open anyway.
             </p>
           </div>
         </div>
@@ -296,23 +303,24 @@
               The OPENED list at the top of the sidebar tracks sessions
               you&rsquo;re actively running. RECENT lets you pick up where
               you stopped last week without remembering which directory
-              you were in.
+              you were in &mdash; or which agent you started in.
             </p>
             <ul class="mt-6 space-y-3 text-ink-700 text-[15px]">
               <li class="flex gap-3">
                 <span class="badge-dot mt-2"></span>
-                Sessions parsed from <code class="kbd">~/.claude/projects/</code>
-                &mdash; nothing proprietary.
+                Sessions read straight from each agent&rsquo;s own log
+                files &mdash; no proprietary format, no daemon.
               </li>
               <li class="flex gap-3">
                 <span class="badge-dot mt-2"></span>
                 Title auto-derived from the conversation; rename inline if you
-                want.
+                want. Each row carries a small agent chip so you can tell
+                Claude from Codex at a glance.
               </li>
               <li class="flex gap-3">
                 <span class="badge-dot mt-2"></span>
                 Status dot reflects the real state: running, awaiting input,
-                idle, done.
+                awaiting permission, idle, done.
               </li>
             </ul>
           </div>
@@ -351,10 +359,10 @@
             </h2>
             <p class="mt-4 text-ink-700 text-[17px] leading-relaxed">
               Quiver doesn&rsquo;t replace your terminal &mdash; it absorbs
-              the one you keep next to Claude. Same shell, same path, same
-              dotfiles. <code class="kbd">git diff</code> the change Claude
-              just made, run the test suite, and answer Claude&rsquo;s next
-              prompt without alt-tabbing.
+              the one you keep next to the agent. Same shell, same path, same
+              dotfiles. <code class="kbd">git diff</code> the change Claude or
+              Codex just made, run the test suite, answer the next prompt
+              without alt-tabbing.
             </p>
           </div>
         </div>
@@ -366,7 +374,7 @@
       <div class="max-w-container mx-auto px-6 py-24 md:py-32 text-center">
         <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">Get Quiver</p>
         <h2 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight max-w-2xl mx-auto">
-          Free. macOS. One signed DMG.
+          macOS. One signed DMG.
         </h2>
         <p class="mt-5 text-ink-500 text-lg max-w-xl mx-auto">
           Releases live in a public companion repo. Pick the architecture
@@ -407,7 +415,7 @@
             <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" fill="#2563eb" />
           </svg>
           <span class="text-ink-700">Quiver</span>
-          <span class="opacity-60">— built for Claude Code</span>
+          <span class="opacity-60">— built for terminal coding agents</span>
         </div>
         <nav class="flex items-center gap-6">
           <a href="https://github.com/quiveride/quiver-releases" target="_blank" rel="noopener" class="hover:text-ink-900">GitHub</a>

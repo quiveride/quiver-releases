@@ -2,7 +2,8 @@
 
 This repository hosts the **release artifacts** (macOS DMGs +
 electron-builder metadata) for [Quiver](https://github.com/quiveride/quiver),
-a cross-project navigator for Claude Code sessions.
+a cross-project navigator for terminal coding-agent sessions
+(Claude Code, Codex, and more on the way).
 
 ## Downloads
 
