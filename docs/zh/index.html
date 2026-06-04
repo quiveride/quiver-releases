@@ -6,7 +6,7 @@
     <title>Quiver —— 每一个 coding agent 会话的归处</title>
     <meta
       name="description"
-      content="Quiver 是终端 coding agent 的桌面工作台。Claude Code、Codex 跨项目的所有会话一屏看完，真实终端、真实 git diff、真实 shell 全在同一个窗口里。"
+      content="Quiver 是终端 coding agent 的桌面工作台。Claude Code、Codex 跨项目的所有会话一屏看完 —— 本地或远程 SSH —— 真实终端、真实 git diff、逐块暂存、真实 shell 全在同一个窗口里。"
     />
     <meta property="og:title" content="Quiver —— 每一个 coding agent 会话的归处" />
     <meta
@@ -111,7 +111,7 @@
           <p class="mt-6 text-lg md:text-xl text-ink-500 leading-relaxed max-w-2xl">
             不再翻 tmux 标签页、不再开八个 iTerm 窗口。
             Quiver 把每一个终端 coding agent 会话 —— Claude Code、Codex，以及更多即将支持的 ——
-            都固定下来：真实终端、真实 diff、真实 shell，全在同一个画面里。
+            都固定下来，本地或远程 SSH 主机都行：真实终端、真实 diff、逐块暂存、真实 shell，全在同一个画面里。
           </p>
           <div class="mt-9 flex flex-wrap items-center gap-3">
             <a href="#download" class="inline-flex items-center gap-2 h-11 px-5 rounded-lg bg-ink-900 text-white text-sm font-medium hover:bg-ink-700">
@@ -207,17 +207,37 @@
               真 PTY 跑的是和你 shell 里完全一样的 <code class="kbd">claude</code> 或
               <code class="kbd">codex</code> ——
               Nerd Font、oh-my-zsh 主题、vim 快捷键、<code class="kbd">⌥</code> 跳词，全部正常。
-              没有任何行为差异。
+              下半屏 <code class="kbd">⌃`</code> 开一个 zsh pane，一个不够还能左右
+              <strong>分屏</strong>成多个。
             </p>
           </div>
           <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
             <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">04 · Diff &amp; 文件</div>
-            <h3 class="text-xl font-semibold tracking-tight">边聊边看 agent 改了什么。</h3>
+            <h3 class="text-xl font-semibold tracking-tight">看清改动，再逐块暂存。</h3>
             <p class="mt-3 text-ink-500 leading-relaxed">
-              右侧自动跟随当前会话的工作目录。
-              切到 Changes 标签看实时 <code class="kbd">git status</code>，
-              点任意文件弹出对比视图。下半屏 <code class="kbd">⌃`</code>
-              开一个 zsh pane 跑测试、看 <code class="kbd">git log</code>，和上面同目录。
+              右侧自动跟随当前会话的工作目录。切到 Changes 看实时
+              <code class="kbd">git status</code>，点任意文件弹出对比视图 ——
+              再像 VS Code 一样<em>逐块</em>暂存、取消暂存、丢弃。
+              文件树会把 git 忽略的条目灰显，还有 worktree 切换器跟随 agent 新建的分支。
+            </p>
+          </div>
+          <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">05 · 远程</div>
+            <h3 class="text-xl font-semibold tracking-tight">在任意 SSH 主机上跑 agent。</h3>
+            <p class="mt-3 text-ink-500 leading-relaxed">
+              从你的 <code class="kbd">~/.ssh/config</code>（含 devpod）里挑一台主机，
+              浏览它的目录，直接在上面跑 Claude 或 Codex，完整终端就在 Quiver 里。
+              文件、Changes、diff、底部 shell 全部走同一条复用连接。
+              主机上有 <code class="kbd">tmux</code> 时，断线也不丢会话 —— 重连回到同一个画面。
+            </p>
+          </div>
+          <div class="rounded-2xl bg-white border border-ink-100 p-8 hover-rise">
+            <div class="text-xs font-semibold tracking-wider uppercase text-ink-300 mb-3">06 · 主题</div>
+            <h3 class="text-xl font-semibold tracking-tight">浅色、深色，或你自己的。</h3>
+            <p class="mt-3 text-ink-500 leading-relaxed">
+              内置浅色 / 深色主题任选（含 Catppuccin），也能直接导入一份
+              <strong>VS Code 配色主题</strong>文件 —— workbench 配色映射到应用界面，
+              <code class="kbd">terminal.ansi*</code> 映射到终端。导入的主题实时预览、重启后保留。
             </p>
           </div>
         </div>
@@ -271,9 +291,103 @@
               Quiver 不取代你的终端 —— 它把那个本来就跟 agent 并排开着的 shell 收编进来。
               同一个 shell、同一个 cwd、同一份 dotfiles。
               <code class="kbd">git diff</code> 看 Claude 或 Codex 刚改的东西，跑测试、回答下一个 prompt，
-              全程不用 alt-tab。
+              全程不用 alt-tab。要两个？左右分屏即可。远程项目则直接在主机上、同一目录里开 shell。
             </p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEEP DIVE: REMOTE -->
+    <section class="border-t border-ink-100">
+      <div class="max-w-container mx-auto px-6 py-20 md:py-28">
+        <div class="grid md:grid-cols-12 gap-10 items-center">
+          <div class="md:col-span-5 order-2 md:order-1">
+            <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">本地或远程</p>
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight">
+              在别人的机器上跑 agent。
+            </h2>
+            <p class="mt-4 text-ink-700 text-[17px] leading-relaxed">
+              一个 <span class="kbd">+</span> 菜单，本地起会话，或在
+              <code class="kbd">~/.ssh/config</code> 里的任意主机上起（含 devpod）。
+              agent 跑在<em>那边</em>，完整终端、文件树、git diff 全部通过一条复用的
+              SSH 连接回传过来。
+            </p>
+            <ul class="mt-6 space-y-3 text-ink-700 text-[15px]">
+              <li class="flex gap-3">
+                <span class="badge-dot mt-2"></span>
+                远程项目在侧栏带一个 server 徽章，永远不会和本地项目搞混。
+              </li>
+              <li class="flex gap-3">
+                <span class="badge-dot mt-2"></span>
+                主机上有 <code class="kbd">tmux</code> 时，断线也不丢会话和正在跑的活，
+                重连直接回到同一个画面。
+              </li>
+            </ul>
+          </div>
+          <div class="md:col-span-7 order-1 md:order-2">
+            <div class="rounded-2xl overflow-hidden shadow-product bg-white">
+              <img src="../assets/screenshot-remote.png" alt="Quiver 的创建菜单：本地 Claude、本地 Codex，以及 Remote… ssh 选项；侧栏里一个远程项目带 server 徽章" class="block w-full" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEEP DIVE: STAGING -->
+    <section class="border-t border-ink-100 bg-[#fafbfc]">
+      <div class="max-w-container mx-auto px-6 py-20 md:py-28">
+        <div class="grid md:grid-cols-12 gap-10 items-center">
+          <div class="md:col-span-7">
+            <div class="rounded-2xl overflow-hidden shadow-product bg-white">
+              <img src="../assets/screenshot-staging.png" alt="Quiver 的 diff 视图：逐块 Stage / Discard 按钮，文件列表分成 Staged Changes 和 Changes 两组" class="block w-full" loading="lazy" />
+            </div>
+          </div>
+          <div class="md:col-span-5">
+            <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">提交前先 review</p>
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight">
+              一块一块地暂存。
+            </h2>
+            <p class="mt-4 text-ink-700 text-[17px] leading-relaxed">
+              先看清 agent 刚写了什么，再按自己的节奏提交。每一段连续改动都有独立的内联
+              <em>Stage</em> / <em>Discard</em> —— 留下好的那块、丢掉顺手多改的那行，
+              全程不离开窗口。文件列表像 VS Code 一样分成 <strong>Staged Changes</strong>
+              和 <strong>Changes</strong>，每个操作都直接落到 <code class="kbd">git apply</code>
+              —— 你暂存的，就是 git 看到的。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THEMES -->
+    <section class="border-t border-ink-100">
+      <div class="max-w-container mx-auto px-6 py-20 md:py-24">
+        <div class="max-w-2xl mb-12">
+          <p class="text-xs font-semibold tracking-wider uppercase text-accent mb-3">改成你的样子</p>
+          <h2 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight">
+            浅色、深色，或你早就用惯的那套配色。
+          </h2>
+          <p class="mt-4 text-ink-700 text-[17px] leading-relaxed">
+            内置浅色 / 深色主题一键覆盖界面和终端。或者导入一份
+            <strong>VS Code 配色主题</strong>文件，Quiver 把它的 workbench 配色映射到应用、
+            <code class="kbd">terminal.ansi*</code> 映射到终端 ——
+            你每天盯着的那套配色，处处一致。
+          </p>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-5">
+          <figure class="rounded-2xl overflow-hidden border border-ink-100 hover-rise">
+            <img src="../assets/theme-light.png" alt="GitHub Light 主题下的 Quiver" class="block w-full" loading="lazy" />
+            <figcaption class="px-4 py-3 text-sm text-ink-500 border-t border-ink-100">GitHub Light</figcaption>
+          </figure>
+          <figure class="rounded-2xl overflow-hidden border border-ink-100 hover-rise">
+            <img src="../assets/theme-dark.png" alt="One Dark 主题下的 Quiver" class="block w-full" loading="lazy" />
+            <figcaption class="px-4 py-3 text-sm text-ink-500 border-t border-ink-100">One Dark</figcaption>
+          </figure>
+          <figure class="rounded-2xl overflow-hidden border border-ink-100 hover-rise">
+            <img src="../assets/theme-dracula.png" alt="Dracula 主题下的 Quiver" class="block w-full" loading="lazy" />
+            <figcaption class="px-4 py-3 text-sm text-ink-500 border-t border-ink-100">Dracula</figcaption>
+          </figure>
         </div>
       </div>
     </section>
